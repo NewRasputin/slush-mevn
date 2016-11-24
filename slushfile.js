@@ -45,14 +45,15 @@ gulp.task('default', function(done) {
 				return done()
 			}
 			gutil.log(gutil.colors.green('Here we go...'))
-			gulp.src(__dirname + '/templates/**')
+			return gulp.src('./templates/**', {cwd: __dirname, dot: true})
 				.pipe(template(answers))
 				.pipe(conflict('./'))
 				.pipe(gulp.dest('./'))
 				.pipe(install())
-				.on('finish', function () {
+				.on('end', function () {
 					gutil.log(gutil.colors.green('Aaand done! Now get to work!!'))
 					done()
 				})
+				.resume()
 		})
 })
