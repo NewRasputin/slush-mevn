@@ -11,7 +11,7 @@ gulp.task('start', function () {
 })
 
 gulp.task('build', function () {
-	gulp.src('src/server/**/*.js')
+	return gulp.src('src/server/**/*.js')
 		.pipe(eslint())
 		.pipe(eslint.format())
 		.pipe(babel())
