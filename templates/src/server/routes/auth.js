@@ -1,8 +1,38 @@
 import express from 'express'
+import bcrypt from 'bcryptjs'
 import logger from '../logger.js'
 import User from '../models/user.js'
 
 const auth = express.Router()
+
+auth.route('/login')
+	.get(() => {
+		// TODO: Add session check stuff
+	})
+	.post((req, res) => {
+		let username = req.body.username
+		let password = req.body.password
+		User.findOne({ username: username }, (err, user) => {
+			if (err) {
+				logger.error(err)
+				res.sendStatus(500)
+			} else if (!user) {
+				res.status(400).send({ message: 'No user with that name' })
+			} else {
+				bcrypt.compare(password, user.password, (err, match) => {
+					if (err) {
+						logger.error(err)
+						res.sendStatus(500)
+					} else if (!match) {
+						res.status(400).send({ message: 'Password is incorrect' })
+					} else {
+						req.session.username = username
+						res.status(200).send({ username: username })
+					}
+				})
+			}
+		})
+	})
 
 auth.post('/signup', (req, res) => {
 	let user = new User({
