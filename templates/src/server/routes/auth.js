@@ -6,8 +6,20 @@ import User from '../models/user.js'
 const auth = express.Router()
 
 auth.route('/login')
-	.get(() => {
-		// TODO: Add session check stuff
+	.get((req, res) => {
+		if (req.session && req.session.username) {
+			let username = req.session.username
+			User.findOne({ username: username }, (err, user) => {
+				if (err) {
+					logger.error(err)
+					res.sendStatus(500)
+				} else if (!user) {
+					res.status(400).send({ message: 'No user with that name' })
+				} else {
+					res.status(200).send({ username: username })
+				}
+			})
+		}
 	})
 	.post((req, res) => {
 		let username = req.body.username
