@@ -11,7 +11,10 @@
     "rules": {
         "no-unused-vars": [
             "error",
-            { "varsIgnorePattern": "^_" }
+            {
+              "varsIgnorePattern": "^_",
+              "args": "after-used"
+            }
         ],
         "indent": [
             "error",

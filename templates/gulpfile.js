@@ -3,7 +3,7 @@ var nodemon = require('gulp-nodemon')
 var eslint = require('gulp-eslint')
 var babel = require('gulp-babel')
 
-gulp.task('start', function () {
+gulp.task('start', ['build'], function () {
 	nodemon({
 		script: 'dist/server.js',
 		env: { 'DEBUG': 'app*,http*' }
@@ -18,7 +18,7 @@ gulp.task('build', function () {
 		.pipe(gulp.dest('dist'))
 })
 
-gulp.task('watch', ['build'], function () {
+gulp.task('watch', function () {
 	gulp.watch('src/server/**', ['build'])
 })
 

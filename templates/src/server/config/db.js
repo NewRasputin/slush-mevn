@@ -3,6 +3,7 @@ import logger from '../logger.js'
 
 const uri = process.env.MONGO_URL || 'mongodb://localhost/<%= appName %>'
 
+mongoose.Promise = global.Promise
 mongoose.connect(uri)
 
 const db = mongoose.connection
