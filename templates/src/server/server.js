@@ -4,6 +4,7 @@ import sessions from 'client-sessions'
 import logger from './logger.js'
 import _db from './config/db.js'
 import auth from './routes/auth.js'
+import * as api from './routes/api.js'
 const app = express()
 const port = process.env.PORT || 5000
 
@@ -22,6 +23,7 @@ app.use(sessions({
 	secureProxy: true
 }))
 app.use('/auth', auth)
+app.use('/api', [api.open, api.closed])
 
 app.get('/', (req,res) => {
 	res.send('Hello World!')
