@@ -19,6 +19,8 @@ auth.route('/login')
 					res.status(200).send({ username: username })
 				}
 			})
+		} else {
+			res.sendStatus(200)
 		}
 	})
 	.post((req, res) => {
@@ -62,6 +64,15 @@ auth.post('/signup', (req, res) => {
 			res.sendStatus(200)
 		}
 	})
+})
+
+auth.get('/logout', (req, res) => {
+	if (req.session && req.session.username) {
+		req.session.reset()
+		res.sendStatus(200)
+	} else {
+		res.status(200).send({ message: 'Not signed in' })
+	}
 })
 
 export default auth
