@@ -10,6 +10,7 @@ const port = process.env.PORT || 5000
 
 app.set('trust proxy', true)
 
+app.use(express.static('public'))
 app.use(logger.middleware)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
@@ -26,7 +27,7 @@ app.use('/auth', auth)
 app.use('/api', [api.open, api.closed])
 
 app.get('/', (req,res) => {
-	res.send('Hello World!')
+	res.sendFile(__dirname + '/index.html') // FIXME: lazy way to serve index
 })
 
 app.listen(port, () => {
