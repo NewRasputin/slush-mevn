@@ -4,7 +4,7 @@ var eslint = require('gulp-eslint')
 var babel = require('gulp-babel')
 var webpack = require('gulp-webpack')
 
-gulp.task('start', ['build'], function () {
+gulp.task('start', ['build', 'compile'], function () {
 	nodemon({
 		script: 'dist/server.js',
 		env: { 'DEBUG': 'app*,http*' }
@@ -24,8 +24,33 @@ gulp.task('html', function () {
 		.pipe(gulp.dest('dist'))
 })
 
+gulp.task('compile', function () {
+	return gulp.src('src/client/main.js')
+		.pipe(webpack({
+			output: {
+				filename: 'bundle.js'
+			},
+			module: {
+				loaders: [{
+					test: /\.js$/,
+					exclude: /node_modules/,
+					loader: 'babel',
+					query: {
+						presets: ['es2015'],
+						plugins: ['transform-runtime']
+					}
+				}, {
+					test: /\.vue$/,
+					loader: 'vue'
+				}]
+			}
+		}))
+		.pipe(gulp.dest('dist/public'))
+})
+
 gulp.task('watch', function () {
 	gulp.watch('src/server/**', ['build'])
+	gulp.watch('src/client/**', ['compile'])
 })
 
 
