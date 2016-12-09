@@ -51,8 +51,8 @@ gulp.task('default', function(done) {
 				.pipe(gulp.dest('./'))
 				.pipe(install())
 				.on('end', function () {
-					gutil.log(gutil.colors.green('Aaand done! Now get to work!!'))
 					done()
+					gutil.log(gutil.colors.green('Type \'npm run dev\' to begin'))
 				})
 				.resume()
 		})
