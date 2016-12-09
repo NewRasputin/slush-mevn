@@ -1,6 +1,10 @@
 import logger from '../logger.js'
 import User from '../models/user.js'
 
+////////////////////////////////////////////////////////////////////////
+// Checks if user has permission to do x before responding to request //
+////////////////////////////////////////////////////////////////////////
+
 const authenticate = (req, res, next) => {
 	const username = req.session.username
 	User.findOne({ username: username }, (err, user) => {

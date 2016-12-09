@@ -3,6 +3,10 @@ import bcrypt from 'bcryptjs'
 import logger from '../logger.js'
 import User from '../models/user.js'
 
+////////////////////////////////////////////////////////
+// Authentication based routes. Log in, sign up, etc. //
+////////////////////////////////////////////////////////
+
 const auth = express.Router()
 
 auth.route('/login')

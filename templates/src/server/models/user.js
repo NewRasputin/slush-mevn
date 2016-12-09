@@ -2,6 +2,10 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 import logger from '../logger.js'
 
+////////////////////////////////
+// Schema and model for users //
+////////////////////////////////
+
 const userSchema = new mongoose.Schema({
 	username: { type: String, required: true, unique: true },
 	email: { type: String, required: true },
